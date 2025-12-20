@@ -31,11 +31,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t docker:new .
+          docker build -t docker:fresh .
 
       - name: Save Docker image as artifact
         run: |
-          docker save docker:new > image.tar
+          docker save docker:fresh > image.tar
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
@@ -61,7 +61,7 @@ jobs:
           CONTAINER_NAME: docker-ci-test
         run: |
           set -e
-          docker run -d --name "$CONTAINER_NAME" -p 8080:3000 docker:new
+          docker run -d --name "$CONTAINER_NAME" -p 8080:3000 docker:fresh
 
           # Wait for port to be ready (basic retry loop)
           for i in {1..10}; do
@@ -106,9 +106,9 @@ jobs:
           IMAGE_NAME: golisivaprasad/docker
         run: |
           set -e
-          # Tag both new and the commit SHA for traceability
-          docker tag docker:new $IMAGE_NAME:new
-          # docker tag docker:new $IMAGE_NAME:${{ github.sha }}
+          # Tag both fresh and the commit SHA for traceability
+          docker tag docker:fresh $IMAGE_NAME:fresh
+          # docker tag docker:fresh $IMAGE_NAME:${{ github.sha }}
 
-          docker push $IMAGE_NAME:new
+          docker push $IMAGE_NAME:fresh
           # docker push $IMAGE_NAME:${{ github.sha }}
