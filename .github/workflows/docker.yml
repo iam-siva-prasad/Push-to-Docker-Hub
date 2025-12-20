@@ -106,9 +106,9 @@ jobs:
           IMAGE_NAME: golisivaprasad/docker
         run: |
           set -e
-          # Tag both latest and the commit SHA for traceability
+          # Tag both new and the commit SHA for traceability
           docker tag docker:new $IMAGE_NAME:new
-          docker tag docker:latest $IMAGE_NAME:${{ github.sha }}
+          docker tag docker:new $IMAGE_NAME:${{ github.sha }}
 
-          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:new
           docker push $IMAGE_NAME:${{ github.sha }}
