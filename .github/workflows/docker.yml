@@ -1,5 +1,5 @@
 
-name: Multi-Stage Docker Pipeline
+name: Docker Multi-Stage Pipeline
 
 on:
   push:
