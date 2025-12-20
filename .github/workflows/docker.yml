@@ -31,11 +31,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t pwd:latest .
+          docker build -t D1:latest .
 
       - name: Save Docker image as artifact
         run: |
-          docker save pwd:latest > image.tar
+          docker save D1:latest > image.tar
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
@@ -58,10 +58,10 @@ jobs:
 
       - name: Run and Test Docker image
         env:
-          CONTAINER_NAME: pwd-ci-test
+          CONTAINER_NAME: D1-ci-test
         run: |
           set -e
-          docker run -d --name "$CONTAINER_NAME" -p 8080:3000 pwd:latest
+          docker run -d --name "$CONTAINER_NAME" -p 8080:3000 D1:latest
 
           # Wait for port to be ready (basic retry loop)
           for i in {1..10}; do
@@ -103,12 +103,12 @@ jobs:
 
       - name: Tag and Push Docker image
         env:
-          IMAGE_NAME: golisivaprasad/pwd
+          IMAGE_NAME: golisivaprasad/D1
         run: |
           set -e
           # Tag both latest and the commit SHA for traceability
-          docker tag pwd:latest $IMAGE_NAME:latest
-          docker tag pwd:latest $IMAGE_NAME:${{ github.sha }}
+          docker tag D1:latest $IMAGE_NAME:latest
+          docker tag D1:latest $IMAGE_NAME:${{ github.sha }}
 
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:${{ github.sha }}
